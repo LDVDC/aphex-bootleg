@@ -3,15 +3,15 @@ import time
 import curses
 
 words = open('words').read().splitlines()
-width = 60
-lines = 4
+width = 50
+lines = 5
 speed = 0.05
 dottiness = 1000
 chars = '///\:*{}()[]+-_'
 
 def change_word(wordlist,corr,charlist):
     word_str = ''
-    word = random.choice(wordlist)
+    word = random.choice(wordlist).title()
     for i in word:
         if random.random() * 20 < corr:
             word_str += random.choice(charlist)
@@ -54,18 +54,22 @@ def main(stdscr):
             pass
         if random.random() < 0.02:
             corrupt_chance += 20
+        elif random.random() < 0.08:
+            corrupt_chance += 1 
 
         if random.random() < 0.6:
             word = change_word(words,corrupt_chance,chars)
         
         trail = full_trail(chars,width,dottiness,corrupt_chance,word,lines)
 
-        if corrupt_chance > 0:
+        if corrupt_chance > 20:
+            corrupt_chance -= 3
+        elif corrupt_chance > 0:
             corrupt_chance -= 1
 
         stdscr.addstr(0,0, word + trail)
         stdscr.refresh()
 
-        time.sleep(speed)
+        time.sleep(speed + (random.random() * speed - (speed/2)))
         
 curses.wrapper(main)
