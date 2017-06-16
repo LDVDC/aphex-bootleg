@@ -60,7 +60,12 @@ def main(stdscr):
         if random.random() < 0.6:
             word = change_word(words,corrupt_chance,chars)
         
-        trail = full_trail(chars,width,dottiness,corrupt_chance,word,lines)
+        dollar_chance = random.random()
+        if dollar_chance < 0.01:
+            word = change_word(['$'],corrupt_chance,chars) 
+            trail = full_trail('$',width,1,corrupt_chance,word,lines)
+        else:
+            trail = full_trail(chars,width,dottiness,corrupt_chance,word,lines)
 
         if corrupt_chance > 20:
             corrupt_chance -= 3
@@ -70,6 +75,9 @@ def main(stdscr):
         stdscr.addstr(0,0, word + trail)
         stdscr.refresh()
 
-        time.sleep(speed + (random.random() * speed - (speed/2)))
+        if dollar_chance < 0.01:
+            time.sleep(speed*2)
+        else:
+            time.sleep(speed + (random.random() * speed - (speed/2)))
         
 curses.wrapper(main)
