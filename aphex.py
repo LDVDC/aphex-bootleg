@@ -3,9 +3,9 @@ import time
 import curses
 
 words = open('words').read().splitlines()
-width = 50
+width = 30
 lines = 5
-speed = 0.05
+speed = 0.06
 dottiness = 1000
 chars = '///\:*{}()[]+-_'
 
@@ -63,7 +63,7 @@ def main(stdscr):
         dollar_chance = random.random()
         if dollar_chance < 0.01:
             word = change_word(['$'],corrupt_chance,chars) 
-            trail = full_trail('$',width,1,corrupt_chance,word,lines)
+            trail = full_trail('$$$$$$$$$$$',width,1,corrupt_chance,word,lines)
         else:
             trail = full_trail(chars,width,dottiness,corrupt_chance,word,lines)
 
